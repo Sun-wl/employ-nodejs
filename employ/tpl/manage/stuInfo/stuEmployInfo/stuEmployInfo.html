@@ -1,0 +1,178 @@
+<div class="searchPage" ng-controller="mStuInfo">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">学生就业信息查询</h1>
+    </div>
+    <div class="wrapper-md" ng-controller="stuEmployInfoCtrl">
+        <div class="row">
+            <div class="col-lg-22">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="bs-example form-horizontal">
+
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">系部</label>
+                            <div class="col-lg-2 col-md-4 col-xs-6 m-t-15">
+                                <select type="text" class="form-control"
+                                        ng-model="form.pasternId"
+                                        ng-options="pastern.pasternId as pastern.name for pastern in pasterns"
+                                        ng-change="changePast()">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">专业</label>
+                            <div class="col-lg-2 col-md-4 col-xs-6 m-t-15">
+                                <select type="text" class="form-control"
+                                        ng-model="form.profId"
+                                        ng-options="prof.profId as prof.name for prof in profs | basePast : form.pasternId"
+                                        ng-change="changeProf()">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>
+
+
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">年级</label>
+                            <div class="col-lg-2 col-md-4 col-xs-6 m-t-15">
+                                <select type="text" class="form-control"
+                                        ng-model="form.grade"
+                                        ng-options="grade.value as grade.name for grade in app.grades">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">班级</label>
+                            <div class="col-lg-2 col-md-4 col-xs-6 m-t-15">
+                                <select type="text" class="form-control"
+                                        ng-model="form.clazz"
+                                        ng-options="clazz.name as clazz.name for clazz in clazzs | basePast : form.pasternId | baseProf : form.profId | baseGrade : form.grade">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>
+
+
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">学生姓名</label>
+                            <div class="col-lg-2 col-md-4 col-xs-6 m-t-15">
+                                <input type="text" class="form-control" ng-model="form.realName">
+                            </div>
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">学号</label>
+                            <div class="col-lg-2 col-md-4 col-xs-6 m-t-15">
+                                <input type="text" class="form-control" ng-model="form.stuId">
+                            </div>
+
+
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">生源地</label>
+                            <div class="col-lg-2 col-md-4 col-xs-6 m-t-15">
+                                <select class="form-control" ng-model="form.origin"
+                                        ng-options="province.provinceId as province.name for province in provinces">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">毕业后方向</label>
+                            <div class="col-lg-2 col-md-4 col-xs-6 m-t-15">
+                                <select class="form-control" ng-model="form.direction"
+                                        ng-options="direction.value as direction.name for direction in app.direction">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>
+
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">就业省份</label>
+                            <div class="col-lg-2 col-md-4 col-xs-6 m-t-15">
+                                <select class="form-control" ng-model="form.employProv"
+                                        ng-options="province.provinceId as province.name for province in provinces">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div align="center" class="m-t-15">
+                        <button class="btn w-xs btn-info" ng-click="search()">查询</button>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                学生就业信息
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped m-b-none">
+                    <thead>
+                    <tr>
+                        <th>学号</th>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>班级</th>
+                        <th>专业</th>
+                        <th>系部</th>
+                        <th>生源地</th>
+                        <th class="w-300">毕业后方向（未就业、就业、考研、公务员、其他（如：创业等））</th><!-- 1.未就业 2.就业 3.考研 4.公务员 5.其他-->
+                        <th>就业省份</th>
+                        <th class="w-170">就业单位</th>
+                        <th class="w-120">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="stu in stus">
+                        <td>{{stu.stuId}}</td>
+                        <td>{{stu.realName}}</td>
+                        <td>{{stu.sex}}</td>
+                        <td>{{stu.clazz}}</td>
+                        <td>
+                            <div ng-repeat="prof in profs">
+                                <span ng-if="stu.profId == prof.profId">{{prof.name}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-repeat="pastern in pasterns">
+                                <span ng-if="stu.pasternId == pastern.pasternId">{{pastern.name}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-repeat="province in provinces">
+                                <span ng-if="stu.origin == province.provinceId">{{province.name}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-repeat="direction in app.direction">
+                                <span ng-if="stu.direction == direction.value">{{direction.name}}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-repeat="province in provinces">
+                                <span ng-if="stu.employProv == province.provinceId">{{province.name}}</span>
+                            </div>
+                        </td>
+                        <td>{{stu.employCompany}}</td>
+                        <td>
+                            <a href="#app/mStuInfo/stuEmployInfo/updateStuInfo/{{stu.stuId}}">
+                                <button class="btn btn-xs btn-info">修改</button>
+                            </a>
+                            &nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-xs btn-danger" ng-click="del(stu.stuId)">删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-5 col-xs-12">
+                        <div ng-if="!bigTotalItems"><b>符合条件的数据为空</b></div>
+                        <div ng-if="bigTotalItems">显示第 {{start+1}} 至 <span
+                                ng-if="start != lastStart">{{start+10}}</span><span ng-if="start == lastStart">{{bigTotalItems}}</span>
+                            项结果，共 {{bigTotalItems}} 项
+                        </div>
+                    </div>
+                    <div class="col-sm-7 col-xs-12 text-right">
+                        <pagination total-items="bigTotalItems" ng-model="form.currentPage" ng-change="pageChanged()"
+                                    max-size="maxSize" class="pagination-sm m-t-none m-b" previous-text="上页"
+                                    next-text="下页" first-text="首页" last-text="尾页" boundary-links="true" rotate="false"
+                                    num-pages="numPages"></pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="searchPage" ng-controller="mEmployCountCtrl">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">就业分布</h1>
+    </div>
+    <div class="wrapper-md" ng-controller="employDistbtCtrl">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="bs-example form-horizontal">
+
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">系部</label>
+                            <div class="col-md-4 col-xs-6 m-t-15">
+                                <select type="text" class="form-control"
+                                        ng-model="form.pasternId"
+                                        ng-options="pastern.pasternId as pastern.name for pastern in pasterns"
+                                        ng-change="changePast()">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>
+
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">专业</label>
+                            <div class="col-md-4 col-xs-6 m-t-15">
+                                <select type="text" class="form-control"
+                                        ng-model="form.profId"
+                                        ng-options="prof.profId as prof.name for prof in profs | basePast : form.pasternId"
+                                        ng-change="changeProf()">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>
+
+
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">年级</label>
+                            <div class="col-md-4 col-xs-6 m-t-15">
+                                <select type="text" class="form-control"
+                                        ng-model="form.grade"
+                                        ng-options="grade.value as grade.name for grade in app.grades">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">班级</label>
+                            <div class="col-md-4 col-xs-6 m-t-15">
+                                <select type="text" class="form-control"
+                                        ng-model="form.clazz"
+                                        ng-options="clazz.id as clazz.name for clazz in clazzs | basePast : form.pasternId | baseProf : form.profId | baseGrade : form.grade">
+                                    <option value="">---请选择---</option>
+                                </select>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div align="center" class="m-t-15">
+                        <button class="btn w-xs btn-info" ng-click="search()">查询</button>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                就业分布
+            </div>
+            <div class="table-responsive">
+                <table id="datatable" class="table table-striped m-b-none">
+                    <thead>
+                    <tr>
+                        <th>省份</th>
+                        <th>生源所在地人数</th>
+                        <th>本省待就业人数</th>
+                        <th>本省已就业人数</th>
+                        <th>在本生源地就业人数</th>
+                        <th>非本生源地就业人数</th>
+                        <th>单位所在地人数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="employDistbt in employDistbts">
+                        <td>
+                            <div ng-repeat="province in provinces" ng-if="province.provinceId == employDistbt.provinceId">{{province.name}}</div>
+                        </td>
+                        <td>{{employDistbt.originNum}}</td>
+                        <td>{{employDistbt.pendEmployNum}}</td>
+                        <td>{{employDistbt.employNum}}</td>
+                        <td>{{employDistbt.originEmployNum}}</td>
+                        <td>{{employDistbt.unOriginEmployNum}}</td>
+                        <td>{{employDistbt.employProvNum}}</td>
+                    </tr>
+                    <tr>
+                        <th>总计</th>
+                        <th>{{originNum}}</th>
+                        <th>{{pendEmployNum}}</th>
+                        <th>{{employNum}}</th>
+                        <th>{{originEmployNum}}</th>
+                        <th>{{unOriginEmployNum}}</th>
+                        <th>{{employProvNum}}</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

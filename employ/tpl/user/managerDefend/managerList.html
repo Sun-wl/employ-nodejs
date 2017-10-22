@@ -1,0 +1,81 @@
+<div ng-controller="user">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">管理员列表</h1>
+    </div>
+    <div class="wrapper-md" ng-controller="manageListCtrl">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="bs-example form-horizontal">
+
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">工号</label>
+                            <div class="col-md-4 col-xs-6 m-t-15">
+                                <input type="text" class="form-control" ng-model="form.managerId">
+                            </div>
+
+                            <label class="col-md-2 col-xs-4 m-t-15 control-label">姓名</label>
+                            <div class="col-md-4 col-xs-6 m-t-15">
+                                <input type="text" class="form-control" ng-model="form.realName">
+                            </div>
+
+                            <div class="form-group"></div>
+                            <div class="form-group">
+                                <div class="col-xs-6 m-t-15 text-right">
+                                    <button class="btn w-xs btn-info" ng-click="search()">查询</button>
+                                </div>
+                                <div class="col-xs-6 m-t-15 text-left">
+                                    <button class="btn btn-primary" ui-sref="app.user.managerDefend.add">添加账号</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                管理员列表
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped m-b-none">
+                    <thead>
+                    <tr>
+                        <th>工号</th>
+                        <th>姓名</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="manager in managers">
+                        <td>{{manager.managerId}}</td>
+                        <td>{{manager.realName}}</td>
+                        <td>
+                            <button class="btn btn-xs btn-danger" ng-click="del(manager.managerId)" ng-if="manager.managerId != app.userId">删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-5 col-xs-12">
+                        <div ng-if="!bigTotalItems"><b>符合条件的数据为空</b></div>
+                        <div ng-if="bigTotalItems">显示第 {{start+1}} 至 <span
+                                ng-if="start != lastStart">{{start+10}}</span><span ng-if="start == lastStart">{{bigTotalItems}}</span>
+                            项结果，共 {{bigTotalItems}} 项
+                        </div>
+                    </div>
+                    <div class="col-sm-7 col-xs-12 text-right">
+                        <pagination total-items="bigTotalItems" ng-model="form.currentPage" ng-change="pageChanged()"
+                                    max-size="maxSize" class="pagination-sm m-t-none m-b" previous-text="上页"
+                                    next-text="下页" first-text="首页" last-text="尾页" boundary-links="true" rotate="false"
+                                    num-pages="numPages"></pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

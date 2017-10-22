@@ -1,0 +1,96 @@
+<div class="searchPage" ng-controller="mEmployCountCtrl">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">就业率</h1>
+    </div>
+    <div class="wrapper-md" ng-controller="employRateCtrl">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="bs-example form-horizontal">
+
+                                <label class="col-md-2 col-xs-4 m-t-15 control-label">系部</label>
+                                <div class="col-md-4 col-xs-6 m-t-15">
+                                    <select type="text" class="form-control"
+                                            ng-model="form.pasternId"
+                                            ng-options="pastern.pasternId as pastern.name for pastern in pasterns"
+                                            ng-change="changePast()">
+                                        <option value="">---请选择---</option>
+                                    </select>
+                                </div>
+
+                                <label class="col-md-2 col-xs-4 m-t-15 control-label">专业</label>
+                                <div class="col-md-4 col-xs-6 m-t-15">
+                                    <select type="text" class="form-control"
+                                            ng-model="form.profId"
+                                            ng-options="prof.profId as prof.name for prof in profs | basePast : form.pasternId"
+                                            ng-change="changeProf()">
+                                        <option value="">---请选择---</option>
+                                    </select>
+                                </div>
+
+
+
+                                <label class="col-md-2 col-xs-4 m-t-15 control-label">年级</label>
+                                <div class="col-md-4 col-xs-6 m-t-15">
+                                    <select type="text" class="form-control"
+                                            ng-model="form.grade"
+                                            ng-options="grade.value as grade.name for grade in app.grades">
+                                        <option value="">---请选择---</option>
+                                    </select>
+                                </div>
+                                <label class="col-md-2 col-xs-4 m-t-15 control-label">班级</label>
+                                <div class="col-md-4 col-xs-6 m-t-15">
+                                    <select type="text" class="form-control"
+                                            ng-model="form.clazz"
+                                            ng-options="clazz.id as clazz.name for clazz in clazzs | basePast : form.pasternId | baseProf : form.profId | baseGrade : form.grade">
+                                        <option value="">---请选择---</option>
+                                    </select>
+                                </div>
+
+                        </form>
+                    </div>
+                    <div align="center" class="m-t-15">
+                        <button class="btn w-xs btn-info" ng-click="search()">查询</button>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form class="bs-example form-horizontal">
+                    <div class="form-group m-t-15">
+                        <label class="col-md-4 col-xs-6 control-label">总人数：</label>
+                        <div class="col-md-4 col-xs-6"><label class="control-label">{{employRateInfo.allNum}}</label></div>
+                    </div>
+                    <div class="form-group m-t-15">
+                        <label class="col-md-4 col-xs-6 control-label">未就业人数：</label>
+                        <div class="col-md-4 col-xs-6"><label class="control-label">{{employRateInfo.unEmployNum}}</label></div>
+                    </div>
+                    <div class="form-group m-t-15">
+                        <label class="col-md-4 col-xs-6 control-label">已就业人数：</label>
+                        <div class="col-md-4 col-xs-6"><label class="control-label">{{employRateInfo.employNum}}</label></div>
+                    </div>
+                    <div class="form-group m-t-15">
+                        <label class="col-md-4 col-xs-6 control-label">考取研究生人数：</label>
+                        <div class="col-md-4 col-xs-6"><label class="control-label">{{employRateInfo.masterDegreeNum}}</label></div>
+                    </div>
+                    <div class="form-group m-t-15">
+                        <label class="col-md-4 col-xs-6 control-label">考取公务员人数：</label>
+                        <div class="col-md-4 col-xs-6"><label class="control-label">{{employRateInfo.civilServantNum}}</label></div>
+                    </div>
+                    <div class="form-group m-t-15">
+                        <label class="col-md-4 col-xs-6 control-label">其他（如：创业等）人数：</label>
+                        <div class="col-md-4 col-xs-6"><label class="control-label">{{employRateInfo.otherNum}}</label></div>
+                    </div>
+                    <div class="form-group m-t-15">
+                        <label class="col-md-4 col-xs-6 control-label">就业率：</label>
+                        <div class="col-md-4 col-xs-6"><label class="control-label">{{employRateInfo.employRate}}</label></div>
+                    </div>
+                    <div class="form-group m-t-15"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
