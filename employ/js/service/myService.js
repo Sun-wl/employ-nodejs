@@ -3,7 +3,7 @@
  */
 
 app.factory("myService", function ($http, Base64) {
-    var baseUrl = 'http://192.168.1.102:8080/';
+    var baseUrl = 'http://192.168.31.129:8080/';
     return {
         //登录
         login: function (user, handler) {

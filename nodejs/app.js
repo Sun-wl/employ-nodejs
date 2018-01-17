@@ -22,11 +22,10 @@ var app = express();
 
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:63343"); //需要显示设置来源
-    // res.header("Access-Control-Allow-Origin","http://192.168.1.102:63343"); //需要显示设置来源
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("Access-Control-Allow-Credentials",true); //带cookies
-    res.header("Access-Control-Max-Age","3600"); //带cookies
+    res.header("Access-Control-Allow-Credentials",true);
+    res.header("Access-Control-Max-Age","3600");
     res.header("Cache-Control", "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0");
     res.header("X-Powered-By",' 3.2.1');
     res.header("Content-Type", "application/json;charset=utf-8");
